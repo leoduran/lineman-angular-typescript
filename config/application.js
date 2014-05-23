@@ -55,8 +55,34 @@ module.exports = function (lineman) {
                     "concat_sourcemap:js"
                 ]
             }
-        }
+        },
 
+        loadNpmTasks: ['grunt-typescript'],
+
+        typescript: {
+            compile: {
+                src: 'app/js/**/*.ts',
+                dest: 'generated/js/app.ts.js'
+            }
+        },
+        prependTasks: {
+            common: ['typescript']
+        },
+
+        concat_sourcemap: {
+            options: {
+                "sourcesContent": true
+            },
+            js: {
+                src: [
+                    "<%= files.js.vendor %>",
+                    "<%= files.js.app %>",
+                    "<%= files.coffee.generated %>",
+                    "<%= files.template.generated %>",
+                    "generated/js/app.ts.js"
+                ]
+            }
+        }
         // Sass
         //
         // Lineman supports Sass via grunt-contrib-sass, which requires you first
